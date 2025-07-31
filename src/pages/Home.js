@@ -61,7 +61,9 @@ const Home = () => {
     try {
       console.log(`${actionName} mascota:`, activePet._id);
       
-      const response = await fetch(`http://localhost:3001/api/pet-care/${activePet._id}/${action}`, {
+      const API_URL = process.env.REACT_APP_API_URL || 'https://api-heroes-gh4i.onrender.com/api';
+      
+      const response = await fetch(`${API_URL}/pet-care/${activePet._id}/${action}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
