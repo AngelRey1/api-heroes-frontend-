@@ -201,126 +201,146 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                         {petStats.isSleeping && <span className="sleeping-indicator">💤 Durmiendo</span>}
                     </div>
                     
-                    <div className="stats-bars">
-                        <div className="stat-bar">
-                            <label>Salud: {petStats.health}%</label>
-                            <div className="bar-container">
-                                <div 
-                                    className="bar-fill" 
-                                    style={{ 
-                                        width: `${petStats.health}%`,
-                                        backgroundColor: getStatusColor(petStats.health)
-                                    }}
-                                />
-                            </div>
-                            <span className="stat-text">{getStatusText(petStats.health)}</span>
-                        </div>
+                                         <div className="stats-bars">
+                         <div className="stat-bar">
+                             <label>Salud: {petStats.health}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.health}%`,
+                                         backgroundColor: getStatusColor(petStats.health)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(petStats.health)}</span>
+                         </div>
 
-                        <div className="stat-bar">
-                            <label>Felicidad: {petStats.happiness}%</label>
-                            <div className="bar-container">
-                                <div 
-                                    className="bar-fill" 
-                                    style={{ 
-                                        width: `${petStats.happiness}%`,
-                                        backgroundColor: getStatusColor(petStats.happiness)
-                                    }}
-                                />
-                            </div>
-                            <span className="stat-text">{getStatusText(petStats.happiness)}</span>
-                        </div>
+                         <div className="stat-bar">
+                             <label>Felicidad: {petStats.happiness}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.happiness}%`,
+                                         backgroundColor: getStatusColor(petStats.happiness)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(petStats.happiness)}</span>
+                         </div>
 
-                        <div className="stat-bar">
-                            <label>Sueño: {petStats.sleep}%</label>
-                            <div className="bar-container">
-                                <div 
-                                    className="bar-fill" 
-                                    style={{ 
-                                        width: `${petStats.sleep}%`,
-                                        backgroundColor: getStatusColor(petStats.sleep)
-                                    }}
-                                />
-                            </div>
-                            <span className="stat-text">{getStatusText(petStats.sleep)}</span>
-                        </div>
+                         <div className="stat-bar">
+                             <label>Energía: {petStats.energy}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.energy}%`,
+                                         backgroundColor: getStatusColor(petStats.energy)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(petStats.energy)}</span>
+                         </div>
 
-                        <div className="stat-bar">
-                            <label>Hambre: {petStats.hunger}%</label>
-                            <div className="bar-container">
-                                <div 
-                                    className="bar-fill" 
-                                    style={{ 
-                                        width: `${petStats.hunger}%`,
-                                        backgroundColor: getStatusColor(100 - petStats.hunger)
-                                    }}
-                                />
-                            </div>
-                            <span className="stat-text">{getStatusText(100 - petStats.hunger)}</span>
-                        </div>
+                         <div className="stat-bar">
+                             <label>Sueño: {petStats.sleep}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.sleep}%`,
+                                         backgroundColor: getStatusColor(petStats.sleep)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(petStats.sleep)}</span>
+                         </div>
 
-                        <div className="stat-bar">
-                            <label>Limpieza: {petStats.cleanliness}%</label>
-                            <div className="bar-container">
-                                <div 
-                                    className="bar-fill" 
-                                    style={{ 
-                                        width: `${petStats.cleanliness}%`,
-                                        backgroundColor: getStatusColor(petStats.cleanliness)
-                                    }}
-                                />
-                            </div>
-                            <span className="stat-text">{getStatusText(petStats.cleanliness)}</span>
-                        </div>
-                    </div>
+                         <div className="stat-bar">
+                             <label>Hambre: {petStats.hunger}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.hunger}%`,
+                                         backgroundColor: getStatusColor(100 - petStats.hunger)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(100 - petStats.hunger)}</span>
+                         </div>
+
+                         <div className="stat-bar">
+                             <label>Limpieza: {petStats.cleanliness}%</label>
+                             <div className="bar-container">
+                                 <div 
+                                     className="bar-fill" 
+                                     style={{ 
+                                         width: `${petStats.cleanliness}%`,
+                                         backgroundColor: getStatusColor(petStats.cleanliness)
+                                     }}
+                                 />
+                             </div>
+                             <span className="stat-text">{getStatusText(petStats.cleanliness)}</span>
+                         </div>
+                     </div>
                 </div>
             )}
 
             <div className="pet-actions">
                 <h4>Acciones de Cuidado</h4>
-                <div className="action-buttons">
-                    <button 
-                        onClick={() => handleAction('sleep')} 
-                        disabled={loading || petStats?.isSleeping || petStats?.status === 'Muerta'} 
-                        className="action-btn sleep"
-                    >
-                        😴 Dormir
-                    </button>
-                    <button 
-                        onClick={() => handleAction('play')} 
-                        disabled={loading || petStats?.energy < 5 || petStats?.status === 'Muerta'} 
-                        className="action-btn play"
-                    >
-                        🎾 Jugar
-                    </button>
-                    <button 
-                        onClick={() => handleAction('feed')} 
-                        disabled={loading || petStats?.status === 'Muerta'} 
-                        className="action-btn feed"
-                    >
-                        🍽️ Alimentar
-                    </button>
-                    <button 
-                        onClick={() => handleAction('bathe')} 
-                        disabled={loading || petStats?.status === 'Muerta'} 
-                        className="action-btn bathe"
-                    >
-                        🛁 Bañar
-                    </button>
-                    <button 
-                        onClick={() => handleAction('pet')} 
-                        disabled={loading || petStats?.status === 'Muerta'} 
-                        className="action-btn pet"
-                    >
-                        ❤️ Acariciar
-                    </button>
-                    <button 
-                        onClick={() => handleAction('heal')} 
-                        disabled={loading || petStats?.status === 'Muerta'} 
-                        className="action-btn heal"
-                    >
-                        🩹 Curar
-                    </button>
-                </div>
+                                 <div className="action-buttons">
+                     <button 
+                         onClick={() => handleAction('sleep')} 
+                         disabled={loading || petStats?.isSleeping || petStats?.status === 'Muerta'} 
+                         className="action-btn sleep"
+                         title={petStats?.isSleeping ? 'Ya está durmiendo' : 'Recupera energía y reduce sueño'}
+                     >
+                         😴 Dormir
+                     </button>
+                     <button 
+                         onClick={() => handleAction('play')} 
+                         disabled={loading || petStats?.energy < 10 || petStats?.status === 'Muerta'} 
+                         className="action-btn play"
+                         title={petStats?.energy < 10 ? 'Necesita más energía para jugar' : 'Aumenta felicidad pero gasta energía y ensucia'}
+                     >
+                         🎾 Jugar
+                     </button>
+                     <button 
+                         onClick={() => handleAction('feed')} 
+                         disabled={loading || petStats?.status === 'Muerta'} 
+                         className="action-btn feed"
+                         title="Reduce hambre y aumenta salud"
+                     >
+                         🍽️ Alimentar
+                     </button>
+                     <button 
+                         onClick={() => handleAction('bathe')} 
+                         disabled={loading || petStats?.status === 'Muerta'} 
+                         className="action-btn bathe"
+                         title="Aumenta limpieza y felicidad"
+                     >
+                         🛁 Bañar
+                     </button>
+                     <button 
+                         onClick={() => handleAction('pet')} 
+                         disabled={loading || petStats?.status === 'Muerta'} 
+                         className="action-btn pet"
+                         title="Aumenta felicidad y reduce estrés"
+                     >
+                         ❤️ Acariciar
+                     </button>
+                     <button 
+                         onClick={() => handleAction('heal')} 
+                         disabled={loading || petStats?.status === 'Muerta'} 
+                         className="action-btn heal"
+                         title="Cura enfermedades y aumenta salud"
+                     >
+                         🩹 Curar
+                     </button>
+                 </div>
                 
                 {petStats?.isSleeping && (
                     <button 
@@ -332,16 +352,19 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                     </button>
                 )}
 
-                <div className="action-info">
-                    <p>💡 Consejos:</p>
-                    <ul>
-                        <li>Alimenta regularmente para mantener la salud</li>
-                        <li>Juega para aumentar la felicidad</li>
-                        <li>Baña para mantener la limpieza</li>
-                        <li>Deja dormir para recuperar energía</li>
-                        <li>Acaricia para mejorar el ánimo</li>
-                    </ul>
-                </div>
+                                 <div className="action-info">
+                     <p>💡 Consejos de Jugabilidad:</p>
+                     <ul>
+                         <li><strong>🍽️ Alimentar:</strong> Reduce hambre, aumenta salud</li>
+                         <li><strong>🎾 Jugar:</strong> Aumenta felicidad, gasta energía, ensucia</li>
+                         <li><strong>🛁 Bañar:</strong> Aumenta limpieza y felicidad</li>
+                         <li><strong>😴 Dormir:</strong> Recupera energía, reduce sueño</li>
+                         <li><strong>❤️ Acariciar:</strong> Aumenta felicidad, reduce estrés</li>
+                         <li><strong>🩹 Curar:</strong> Cura enfermedades, aumenta salud</li>
+                         <li><strong>⚡ Energía:</strong> Necesaria para jugar y actividades</li>
+                         <li><strong>⚠️ Cuidado:</strong> Stats bajos pueden causar enfermedades</li>
+                     </ul>
+                 </div>
             </div>
 
             <div className="last-update">
