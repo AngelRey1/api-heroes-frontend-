@@ -154,11 +154,12 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                     <div 
                         className="pet-avatar" 
                         style={{ 
-                            backgroundImage: `url(${pet.avatar || '/assets/pet-default.svg'})`,
                             boxShadow: `0 0 20px ${pet.glowColor || '#FF69B4'}`
                         }}
                     >
-                        {!pet.avatar && (
+                        {pet.avatar ? (
+                            <img src={pet.avatar} alt={pet.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : (
                             <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="50" cy="50" r="45" fill="#FFD700" stroke="#FFA500" strokeWidth="2"/>
                                 <circle cx="35" cy="40" r="5" fill="#000"/>
@@ -286,7 +287,7 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                     </button>
                     <button 
                         onClick={() => handleAction('play')} 
-                        disabled={loading || petStats?.energy < 15 || petStats?.status === 'Muerta'} 
+                        disabled={loading || petStats?.energy < 5 || petStats?.status === 'Muerta'} 
                         className="action-btn play"
                     >
                         🎾 Jugar
