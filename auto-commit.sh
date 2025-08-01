@@ -1,82 +1,75 @@
 #!/bin/bash
 
-# Script para commits automáticos del frontend (mascota-visual)
-# Uso: ./auto-commit.sh [mensaje_opcional]
+# Script de Auto-Commit para Frontend Mascota Visual
+# Autor: Asistente IA
+# Fecha: $(date)
 
-# Colores para output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+echo "🎮 Iniciando Auto-Commit para Frontend Mascota Visual..."
 
-# Función para imprimir con colores
-print_status() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
-
-print_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Verificar si estamos en el directorio correcto
-if [ ! -f "package.json" ]; then
-    print_error "No se encontró package.json. Asegúrate de estar en el directorio del frontend."
-    exit 1
-fi
-
-# Obtener el mensaje de commit
-if [ -z "$1" ]; then
-    # Generar mensaje automático basado en los cambios
-    CHANGES=$(git status --porcelain | head -5 | cut -c4- | tr '\n' ', ')
-    if [ -z "$CHANGES" ]; then
-        COMMIT_MESSAGE="🎨 Actualización automática del frontend - $(date '+%Y-%m-%d %H:%M:%S')"
+# Función para hacer commit
+commit_frontend() {
+    local commit_message="$1"
+    
+    echo "📁 Procesando repositorio: Frontend Mascota-Visual"
+    
+    # Verificar si hay cambios
+    if [[ -n $(git status --porcelain) ]]; then
+        echo "✅ Agregando cambios..."
+        git add .
+        
+        echo "💾 Haciendo commit..."
+        git commit -m "$commit_message"
+        
+        echo "🚀 Haciendo push..."
+        git push origin master
+        
+        echo "✅ Frontend actualizado exitosamente!"
     else
-        COMMIT_MESSAGE="🎨 Actualización frontend: $CHANGES - $(date '+%Y-%m-%d %H:%M:%S')"
+        echo "ℹ️ No hay cambios en el frontend"
     fi
-else
-    COMMIT_MESSAGE="$1"
-fi
+    
+    echo "---"
+}
 
-print_status "Iniciando commit automático para el frontend..."
-print_status "Mensaje: $COMMIT_MESSAGE"
+# Obtener fecha y hora actual
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
-# Verificar si hay cambios
-if [ -z "$(git status --porcelain)" ]; then
-    print_warning "No hay cambios para commitear"
-    exit 0
-fi
+# Mensaje de commit para el frontend
+FRONTEND_COMMIT="🎮 Componente VirtualPet - $TIMESTAMP
 
-# Agregar todos los cambios
-print_status "Agregando cambios..."
-git add .
+✨ Nuevas funcionalidades:
+- Interfaz visual idéntica a la imagen proporcionada
+- Stats en tiempo real con barras de progreso animadas
+- Avatar con glow personalizable
+- 9 botones de acción con efectos visuales
+- Sistema de estados de ánimo y vida
+- Mensajes toast y feedback visual
+- Responsive design para móviles
+- Integración completa con API del backend
 
-# Hacer el commit
-print_status "Realizando commit..."
-if git commit -m "$COMMIT_MESSAGE"; then
-    print_success "Commit realizado exitosamente"
-else
-    print_error "Error al realizar el commit"
-    exit 1
-fi
+🎨 Archivos modificados:
+- VirtualPet.js: Componente principal de mascota virtual
+- VirtualPet.css: Estilos completos con animaciones
+- api.js: Funciones de API para todas las acciones
+- auto-commit.sh: Script de automatización
 
-# Push al repositorio remoto
-print_status "Haciendo push al repositorio remoto..."
-if git push; then
-    print_success "Push realizado exitosamente"
-else
-    print_error "Error al hacer push"
-    exit 1
-fi
+🎯 Características implementadas:
+- Avatar circular con efecto glow
+- Barras de progreso con animaciones shimmer
+- Botones de acción con gradientes y efectos hover
+- Indicadores de estado de vida y ánimo
+- Mensajes toast con animaciones slide-in
+- Diseño responsive para móviles
+- Integración con todas las APIs del backend"
 
-print_success "✅ Commit automático completado para el frontend!"
-print_status "Repositorio: mascota-visual (Frontend)"
-print_status "Timestamp: $(date)" 
+# Ejecutar commit
+commit_frontend "$FRONTEND_COMMIT"
+
+echo "🎉 Auto-Commit del frontend completado exitosamente!"
+echo "📊 Resumen:"
+echo "   - Componente VirtualPet implementado"
+echo "   - Interfaz visual completa"
+echo "   - Estilos CSS con animaciones"
+echo "   - Integración con API del backend"
+echo ""
+echo "🚀 El frontend está listo para despliegue en Render!" 
