@@ -154,7 +154,7 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                     <div 
                         className="pet-avatar" 
                         style={{ 
-                            backgroundImage: `url(${pet.avatar || '/assets/pet-default.png'})`,
+                            backgroundImage: `url(${pet.avatar || '/assets/pet-default.svg'})`,
                             boxShadow: `0 0 20px ${pet.glowColor || '#FF69B4'}`
                         }}
                     />

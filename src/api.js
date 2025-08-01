@@ -589,7 +589,7 @@ export const playWithPet = async (token, petId) => {
 };
 
 export const bathePet = async (token, petId) => {
-  const res = await axios.post(`${API_URL}/pet-care/${petId}/bath`, {}, {
+  const res = await axios.post(`${API_URL}/pet-care/${petId}/bathe`, {}, {
     headers: { Authorization: `Bearer ${token}` }
   });
   return res.data;
@@ -603,7 +603,7 @@ export const healPet = async (token, petId) => {
 };
 
 export const getPetStatus = async (token, petId) => {
-  const res = await axios.get(`${API_URL}/pets/${petId}/status`, {
+  const res = await axios.get(`${API_URL}/pet-care/${petId}/status`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   return res.data;

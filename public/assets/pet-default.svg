@@ -1,0 +1,18 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Círculo principal -->
+  <circle cx="50" cy="50" r="45" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+  
+  <!-- Ojos -->
+  <circle cx="35" cy="40" r="5" fill="#000"/>
+  <circle cx="65" cy="40" r="5" fill="#000"/>
+  
+  <!-- Nariz -->
+  <circle cx="50" cy="55" r="3" fill="#FF6B6B"/>
+  
+  <!-- Boca -->
+  <path d="M 40 65 Q 50 75 60 65" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Orejas -->
+  <ellipse cx="30" cy="25" rx="8" ry="12" fill="#FFD700"/>
+  <ellipse cx="70" cy="25" rx="8" ry="12" fill="#FFD700"/>
+</svg> 
