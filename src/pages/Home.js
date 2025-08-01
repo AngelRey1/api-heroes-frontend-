@@ -11,19 +11,15 @@ const Home = () => {
   const [lastAction, setLastAction] = useState(null);
 
   useEffect(() => {
-    if (activePet) {
-      console.log('Home - Pet Stats Debug:');
-      console.log('  Health:', activePet.health, typeof activePet.health);
-      console.log('  Happiness:', activePet.happiness, typeof activePet.happiness);
-      console.log('  Energy:', activePet.energy, typeof activePet.energy);
-      console.log('  Raw pet object:', activePet);
+    if (user && token) {
+      fetchUserData();
     }
-  }, [activePet]);
+  }, [user, token]);
 
   useEffect(() => {
     if (activePet) {
-      checkAbandonment();
       checkPetStatus();
+      checkDiseases(); // Verificar enfermedades automáticamente
     }
   }, [activePet]);
 
@@ -43,15 +39,47 @@ const Home = () => {
   };
 
   const checkPetStatus = () => {
-    if (!activePet) return;
+    if (activePet) {
+      const now = new Date();
+      const lastCare = new Date(activePet.lastCare);
+      const hoursSinceCare = (now - lastCare) / (1000 * 60 * 60);
+      
+      if (hoursSinceCare > 24 && activePet.health < 50) {
+        setNotification({
+          message: '¡Tu mascota necesita atención! Ha pasado mucho tiempo sin cuidado.',
+          type: 'warning'
+        });
+      }
+    }
+  };
+
+  // Verificar enfermedades automáticamente
+  const checkDiseases = async () => {
+    if (!activePet || !token) return;
     
-    const { health, happiness, energy } = activePet;
-    
-    if (health < 30 || happiness < 30 || energy < 30) {
-      setNotification({
-        message: '😢 Tu mascota está triste y necesita cuidados',
-        type: 'warning'
+    try {
+      const API_URL = process.env.REACT_APP_API_URL || 'https://api-heroes-gh4i.onrender.com/api';
+      
+      const response = await fetch(`${API_URL}/pet-care/${activePet._id}/check-disease`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
+      
+      if (response.ok) {
+        const result = await response.json();
+        if (result.message.includes('enfermado')) {
+          setNotification({
+            message: result.message,
+            type: 'warning'
+          });
+          await fetchUserData(); // Recargar datos
+        }
+      }
+    } catch (error) {
+      console.error('Error verificando enfermedades:', error);
     }
   };
 
@@ -71,13 +99,20 @@ const Home = () => {
         }
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `Error al ${actionName.toLowerCase()}`);
-      }
-      
       const result = await response.json();
       console.log(`Resultado ${actionName}:`, result);
+      
+      if (!response.ok) {
+        // Si es un error 400, puede ser una consecuencia (como indigestión)
+        if (response.status === 400 && result.message) {
+          setNotification({
+            message: result.message,
+            type: 'warning'
+          });
+          return;
+        }
+        throw new Error(result.error || `Error al ${actionName.toLowerCase()}`);
+      }
       
       // Mostrar notificación con consecuencias
       let notificationMessage = result.message;
