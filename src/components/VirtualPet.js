@@ -48,10 +48,10 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
             let result;
             switch (action) {
                 case 'feed':
-                    result = await feedPet(token, pet._id, params.foodType || 'regular');
+                    result = await feedPet(token, pet._id);
                     break;
                 case 'water':
-                    result = await waterPet(token, pet._id, params.waterType || 'regular');
+                    result = await waterPet(token, pet._id);
                     break;
                 case 'play':
                     result = await playWithPet(token, pet._id);
@@ -63,7 +63,7 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                     result = await bathePet(token, pet._id);
                     break;
                 case 'sleep':
-                    result = await sleepPet(token, pet._id);
+                    result = await sleepPet(pet._id, token);
                     break;
                 case 'wake':
                     result = await wakePet(token, pet._id);
@@ -157,7 +157,19 @@ const VirtualPet = ({ pet, token, onUpdate }) => {
                             backgroundImage: `url(${pet.avatar || '/assets/pet-default.svg'})`,
                             boxShadow: `0 0 20px ${pet.glowColor || '#FF69B4'}`
                         }}
-                    />
+                    >
+                        {!pet.avatar && (
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="45" fill="#FFD700" stroke="#FFA500" strokeWidth="2"/>
+                                <circle cx="35" cy="40" r="5" fill="#000"/>
+                                <circle cx="65" cy="40" r="5" fill="#000"/>
+                                <circle cx="50" cy="55" r="3" fill="#FF6B6B"/>
+                                <path d="M 40 65 Q 50 75 60 65" stroke="#000" strokeWidth="2" fill="none"/>
+                                <ellipse cx="30" cy="25" rx="8" ry="12" fill="#FFD700"/>
+                                <ellipse cx="70" cy="25" rx="8" ry="12" fill="#FFD700"/>
+                            </svg>
+                        )}
+                    </div>
                 </div>
                 <div className="pet-info">
                     <h3 className="pet-name">{pet.name}</h3>

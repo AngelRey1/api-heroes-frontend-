@@ -21,40 +21,7 @@ const Home = () => {
     }
   }, [activePet]);
 
-  useEffect(() => {
-    if (activePet) {
-      checkAbandonment();
-      checkPetStatus();
-    }
-  }, [activePet]);
-
-  const checkAbandonment = () => {
-    if (!activePet || !activePet.lastCare) return;
-    
-    const lastCare = new Date(activePet.lastCare);
-    const now = new Date();
-    const hoursSinceLastCare = (now - lastCare) / (1000 * 60 * 60);
-    
-    if (hoursSinceLastCare > 24) {
-      setNotification({
-        message: '⚠️ Tu mascota necesita atención urgente!',
-        type: 'warning'
-      });
-    }
-  };
-
-  const checkPetStatus = () => {
-    if (!activePet) return;
-    
-    const { health, happiness, energy } = activePet;
-    
-    if (health < 30 || happiness < 30 || energy < 30) {
-      setNotification({
-        message: '😢 Tu mascota está triste y necesita cuidados',
-        type: 'warning'
-      });
-    }
-  };
+  // Las notificaciones de cuidado se manejan en el componente VirtualPet
 
   // Las acciones de mascota ahora se manejan en el componente VirtualPet
 
